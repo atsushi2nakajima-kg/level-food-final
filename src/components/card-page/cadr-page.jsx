@@ -66,7 +66,10 @@ function CardPageContent({ product }) {
               <p>{item.description}</p>
               <strong>{item.price.toLocaleString("ru-RU")} ₽</strong>
               <div className="recommendation-actions">
-                <button onClick={() => addToCart(item)}>Заказать</button>
+                <button onClick={() => {
+                  addToCart(item);
+                  navigate("/cart");
+                }}>Заказать</button>
                 <button className="more" onClick={() => {
                   setSelectedProduct(item);
                   navigate("/card-page", { state: { product: item } });

@@ -1,10 +1,35 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
+function loadCart() {
+  try {
+    const savedCart = localStorage.getItem("level-food-cart");
+    if (!savedCart) return [];
+
+    const parsedCart = JSON.parse(savedCart);
+    if (!Array.isArray(parsedCart)) {
+      throw new Error("Сохранённая корзина должна быть списком товаров.");
+    }
+
+    return parsedCart;
+  } catch (error) {
+    console.error("Не удалось загрузить корзину из браузера:", error);
+    return [];
+  }
+}
+
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(loadCart);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("level-food-cart", JSON.stringify(cart));
+    } catch (error) {
+      console.error("Не удалось сохранить корзину в браузере:", error);
+    }
+  }, [cart]);
 
   const addToCart = (product, quantity = 1) => {
     setCart((prev) => {

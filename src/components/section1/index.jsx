@@ -1,7 +1,10 @@
 import "./style.css";
 import image1 from "./image.png";
+import { useNavigate } from "react-router-dom";
 
 function Section1() {
+  const navigate = useNavigate();
+
   return (
     <div className="section">
       <div className="container">
@@ -12,7 +15,7 @@ function Section1() {
             <p>
               Мы - динамично развивающаяся компания в <br />сфере ресторанного бизнеса (Horeca) с <br />индивидуальным подходом к каждому клиенту
             </p>
-            <button>Сделать заказ</button>
+            <button onClick={() => navigate("/product")}>Сделать заказ</button>
           </div>
           <img className="image1" src={image1}  alt="" />
         </div>

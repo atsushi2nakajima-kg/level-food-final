@@ -32,6 +32,7 @@ function Products() {
     }
 
     addToCart(product);
+    navigate("/cart");
   };
 
   return (

@@ -1,8 +1,18 @@
 import "./style.css";
 import { useCart } from "../../context/cartcontext";
+import { useState } from "react";
 function Chekout () {
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart();
+  const [orderComplete, setOrderComplete] = useState(false);
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (cart.length === 0) return;
+
+    clearCart();
+    setOrderComplete(true);
+  };
 
   return (
     <div className="page">
@@ -14,16 +24,17 @@ function Chekout () {
 
         <h1>Оформление Заказа</h1>
 
+        <form onSubmit={handleSubmit}>
         <div className="forms">
 
           <section className="form-block">
             <p className="subtitle">Детали заказа</p>
 
             <label>Ваше имя</label>
-            <input type="text" />
+            <input type="text" required />
 
             <label>Ваш номер</label>
-            <input type="text" />
+            <input type="tel" required />
 
             <label>Выбрать способ оплаты</label>
             <select>
@@ -37,7 +48,7 @@ function Chekout () {
             <p className="subtitle">Детали доставки</p>
 
             <label>Адрес доставки</label>
-            <input type="text" placeholder="Введите адрес" />
+            <input type="text" placeholder="Введите адрес" required />
 
             <label>Комментарий курьеру</label>
             <input type="text" />
@@ -154,9 +165,14 @@ function Chekout () {
 
 
         <div className="confirm">
-          <button>Подтвердить заказ</button>
+          <button type="submit" disabled={cart.length === 0}>Подтвердить заказ</button>
         </div>
-
+        {orderComplete && (
+          <p role="status">
+            Заказ подтверждён только в браузере. Магазин не получит его, потому что сервер не подключён.
+          </p>
+        )}
+        </form>
       </main>
 
 

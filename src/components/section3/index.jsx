@@ -1,7 +1,24 @@
 import "./style.css";
 import Meet from "../../assets/image.png";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../context/cartcontext";
 
 function Section3() {
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const product = {
+    id: "beef-Мраморная говядина 1 кг-2000",
+    title: "Мраморная говядина 1 кг",
+    description: "Описание",
+    price: 2000,
+    image: Meet,
+  };
+
+  const handleOrder = () => {
+    addToCart(product);
+    navigate("/cart");
+  };
+
   return (
     <section>
       <div className="container">
@@ -17,7 +34,7 @@ function Section3() {
               <strong>2000 ₽</strong>
 
               <div className="product-buttons">
-                <button>Заказать</button>
+                <button onClick={handleOrder}>Заказать</button>
                 <button className="more">Подробнее</button>
               </div>
             </div>
@@ -30,7 +47,7 @@ function Section3() {
               <strong>2000 ₽</strong>
 
               <div className="product-buttons">
-                <button>Заказать</button>
+                <button onClick={handleOrder}>Заказать</button>
                 <button className="more">Подробнее</button>
               </div>
             </div>
@@ -43,7 +60,7 @@ function Section3() {
               <strong>2000 ₽</strong>
 
               <div className="product-buttons">
-                <button>Заказать</button>
+                <button onClick={handleOrder}>Заказать</button>
                 <button className="more">Подробнее</button>
               </div>
             </div>
@@ -56,7 +73,7 @@ function Section3() {
               <strong>2000 ₽</strong>
 
               <div className="product-buttons">
-                <button>Заказать</button>
+                <button onClick={handleOrder}>Заказать</button>
                 <button className="more">Подробнее</button>
               </div>
             </div>
@@ -69,7 +86,7 @@ function Section3() {
               <strong>2000 ₽</strong>
 
               <div className="product-buttons">
-                <button>Заказать</button>
+                <button onClick={handleOrder}>Заказать</button>
                 <button className="more">Подробнее</button>
               </div>
             </div>
@@ -82,7 +99,7 @@ function Section3() {
               <strong>2000 ₽</strong>
 
               <div className="product-buttons">
-                <button>Заказать</button>
+                <button onClick={handleOrder}>Заказать</button>
                 <button className="more">Подробнее</button>
               </div>
             </div>
@@ -95,7 +112,7 @@ function Section3() {
               <strong>2000 ₽</strong>
 
               <div className="product-buttons">
-                <button>Заказать</button>
+                <button onClick={handleOrder}>Заказать</button>
                 <button className="more">Подробнее</button>
               </div>
             </div>
@@ -108,7 +125,7 @@ function Section3() {
               <strong>2000 ₽</strong>
 
               <div className="product-buttons">
-                <button>Заказать</button>
+                <button onClick={handleOrder}>Заказать</button>
                 <button className="more">Подробнее</button>
               </div>
             </div>
