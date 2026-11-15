@@ -1,317 +1,110 @@
-import "./style.css";
-import Meet from "../../assets/image.png"
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../context/cartcontext";
+import { getCategories, getProducts } from "../../API/catalog";
+import { useCart } from "../../context/useCart";
+import ProductCard from "./product-card";
+import "./style.css";
+
 function Products() {
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { addToCart, setSelectedProduct } = useCart();
 
-  const handleProductAction = (event) => {
-    const button = event.target.closest("button");
-    if (!button) return;
+  useEffect(() => {
+    async function loadCatalog() {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch {
+        setError("Не удалось загрузить товары. Попробуйте позже.");
+      } finally {
+        setLoading(false);
+      }
 
-    const card = button.closest(".product-card");
-    const section = button.closest(".product-section");
-    if (!card || !section) return;
-
-    const title = card.querySelector("h3")?.textContent?.trim() || "Товар";
-    const description = card.querySelector("p")?.textContent?.trim() || "";
-    const price = Number((card.querySelector("strong")?.textContent || "0").replace(/[^0-9]/g, ""));
-    const product = {
-      id: `${section.id}-${title}-${price}`,
-      title,
-      description,
-      price,
-      image: card.querySelector("img")?.src || Meet,
-    };
-
-    if (button.classList.contains("more")) {
-      setSelectedProduct(product);
-      navigate("/card-page");
-      return;
+      // Категории загружаются отдельно: если их нет, товары всё равно можно показать.
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch {
+        setCategories([]);
+      }
     }
 
+    loadCatalog();
+  }, []);
+
+  const addProduct = (product) => {
     addToCart(product);
     navigate("/cart");
   };
 
-  return (
-    <section className="products" onClick={handleProductAction}>
+  const openProduct = (product) => {
+    setSelectedProduct(product);
+    navigate("/card-page", { state: { product } });
+  };
 
+  const renderProducts = (items) => (
+    <div className="product-grid">
+      {items.map((product) => (
+        <ProductCard
+          key={product.id}
+          product={product}
+          onAdd={addProduct}
+          onDetails={openProduct}
+        />
+      ))}
+    </div>
+  );
+
+  return (
+    <section className="products">
       <div className="products-top">
         <h1>Товары</h1>
-
-        <p>
-          Наша компания производит поставки
-          <br />
-          премиальной мраморной говядины, баранины,
-          <br />
-          утки морепродуктов, рыбы и мясных
-          <br />
-          полуфабрикатов
-        </p>
+        <p>Наша компания производит поставки премиальной продукции.</p>
       </div>
 
-      <div className="categories">
-        <a href="#beef">Говядина</a>
-        <a href="#pork">Свинина</a>
-        <a href="#chicken">Курица</a>
-        <a href="#seafood">Морепродукты</a>
-      </div>
-
-
-
-      <div className="product-section" id="beef">
-
-        <h2>Говядина</h2>
-
-        <div className="product-grid">
-
-          <div className="product-card">
-            
-            <img src ={Meet} alt="Мраморная говядина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            
-            <img src ={Meet} alt="Мраморная говядина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            
-            <img src ={Meet} alt="Мраморная говядина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            
-            <img src ={Meet} alt="Мраморная говядина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            
-            <img src ={Meet} alt="Мраморная говядина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            
-            <img src ={Meet} alt="Мраморная говядина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            
-            <img src ={Meet} alt="Мраморная говядина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            
-            <img src ={Meet} alt="Мраморная говядина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-
-
-      <div className="product-section" id="pork">
-
-        <h2>Свинина</h2>
-
-        <div className="product-grid">
-
-          <div className="product-card">
-            <img src={Meet} alt="Свинина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            <img src={Meet} alt="Свинина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            <img src={Meet} alt="Свинина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            <img src={Meet} alt="Свинина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            <img src={Meet} alt="Свинина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            <img src={Meet} alt="Свинина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            <img src={Meet} alt="Свинина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-
-          <div className="product-card">
-            
-            <img src={Meet} alt="Свинина" />
-
-            <h3>Мраморная говядина 1 кг</h3>
-            <p>Описание</p>
-            <strong>2000 ₽</strong>
-
-            <div className="product-buttons">
-              <button>Заказать</button>
-              <button className="more">Подробнее</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
+      {categories.length > 0 && (
+        <nav className="categories" aria-label="Категории товаров">
+          {categories.map((category) => (
+            <a key={category.id} href={`#category-${category.id}`}>
+              {category.name}
+            </a>
+          ))}
+        </nav>
+      )}
+
+      {loading && <p role="status">Загружаем товары...</p>}
+      {error && <p role="alert">{error}</p>}
+      {!loading && !error && products.length === 0 && <p>Товаров пока нет.</p>}
+
+      {!loading && !error && products.length > 0 && categories.length === 0 && (
+        <section className="product-section">
+          <h2>Все товары</h2>
+          {renderProducts(products)}
+        </section>
+      )}
+
+      {!loading && !error && categories.map((category) => {
+        const categoryProducts = products.filter(
+          (product) => product.category_id === category.id,
+        );
+
+        if (categoryProducts.length === 0) return null;
+
+        return (
+          <section
+            className="product-section"
+            id={`category-${category.id}`}
+            key={category.id}
+          >
+            <h2>{category.name}</h2>
+            {renderProducts(categoryProducts)}
+          </section>
+        );
+      })}
     </section>
   );
 }

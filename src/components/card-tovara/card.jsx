@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../context/cartcontext";
+import { useCart } from "../../context/useCart";
 import "./card.css";
 
 const Card = () => {

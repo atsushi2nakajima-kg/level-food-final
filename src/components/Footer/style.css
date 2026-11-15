@@ -1,9 +1,12 @@
 /*  FOOTER  */
 
 .footer {
+  width: 100%;
+  max-width: 1880px;
+  margin-inline: auto;
   border-top: 1px solid #777;
   min-height: 220px;
-  padding: 45px 60px;
+  padding: 45px 80px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
@@ -35,4 +38,38 @@
   text-align: right;
   font-size: 12px;
   line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 16px;
+    padding: 32px 20px;
+  }
+
+  .footer-logo {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .footer-links {
+    gap: 12px;
+  }
+
+  .contacts {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 380px) {
+  .footer {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-links,
+  .contacts {
+    align-items: center;
+    text-align: center;
+  }
 }

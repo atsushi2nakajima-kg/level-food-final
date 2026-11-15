@@ -1,17 +1,16 @@
 import "./style.css";
-import { useCart } from "../../context/cartcontext";
+import { useCart } from "../../context/useCart";
 import { useState } from "react";
 function Chekout () {
-  const { cart, clearCart } = useCart();
-  const [orderComplete, setOrderComplete] = useState(false);
+  const { cart } = useCart();
+  const [orderMessage, setOrderMessage] = useState("");
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (cart.length === 0) return;
 
-    clearCart();
-    setOrderComplete(true);
+    setOrderMessage("Заказ не отправлен: сервер пока не принимает заказы. Корзина сохранена.");
   };
 
   return (
@@ -30,14 +29,14 @@ function Chekout () {
           <section className="form-block">
             <p className="subtitle">Детали заказа</p>
 
-            <label>Ваше имя</label>
-            <input type="text" required />
+            <label htmlFor="customer-name">Ваше имя</label>
+            <input id="customer-name" name="customerName" type="text" autoComplete="name" required />
 
-            <label>Ваш номер</label>
-            <input type="tel" required />
+            <label htmlFor="customer-phone">Ваш номер</label>
+            <input id="customer-phone" name="customerPhone" type="tel" autoComplete="tel" required />
 
-            <label>Выбрать способ оплаты</label>
-            <select>
+            <label htmlFor="payment-method">Выбрать способ оплаты</label>
+            <select id="payment-method" name="paymentMethod">
               <option>Тинькофф онлайн касса</option>
               <option>Наличными</option>
             </select>
@@ -47,14 +46,14 @@ function Chekout () {
           <section className="form-block">
             <p className="subtitle">Детали доставки</p>
 
-            <label>Адрес доставки</label>
-            <input type="text" placeholder="Введите адрес" required />
+            <label htmlFor="delivery-address">Адрес доставки</label>
+            <input id="delivery-address" name="deliveryAddress" type="text" autoComplete="street-address" placeholder="Введите адрес" required />
 
-            <label>Комментарий курьеру</label>
-            <input type="text" />
+            <label htmlFor="courier-comment">Комментарий курьеру</label>
+            <input id="courier-comment" name="courierComment" type="text" />
 
-            <label>Время доставки</label>
-            <input type="text" />
+            <label htmlFor="delivery-time">Время доставки</label>
+            <input id="delivery-time" name="deliveryTime" type="text" />
           </section>
 
         </div>
@@ -167,11 +166,7 @@ function Chekout () {
         <div className="confirm">
           <button type="submit" disabled={cart.length === 0}>Подтвердить заказ</button>
         </div>
-        {orderComplete && (
-          <p role="status">
-            Заказ подтверждён только в браузере. Магазин не получит его, потому что сервер не подключён.
-          </p>
-        )}
+        {orderMessage && <p role="status">{orderMessage}</p>}
         </form>
       </main>
 

@@ -1,7 +1,4 @@
 import "./style.css";
-import { Link } from "react-router-dom";
-import Footer from "../Footer/footer";
-import Header from "../header/header";
 import Img from "../../assets/image copy.png"
 function Certificates() {
   return (

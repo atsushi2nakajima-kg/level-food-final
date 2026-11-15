@@ -1,7 +1,7 @@
 import "./style.css";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCart } from "../../context/cartcontext";
+import { useCart } from "../../context/useCart";
 import Meet from "../../assets/image.png";
 
 function CardPage() {

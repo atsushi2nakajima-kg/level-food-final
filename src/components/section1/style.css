@@ -1,31 +1,70 @@
 .section1 {
-  margin: 100px 0;
+  margin: clamp(48px, 7vw, 100px) 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: clamp(24px, 4vw, 64px);
   .image1 {
-    width: 700px;
-    height: 400px;
+    width: min(50%, 700px);
+    height: auto;
+    object-fit: cover;
   }
 }
 .textseciton1 {
-  height: 430px;
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
+  gap: 24px;
   h1 {
-    font-size: 42px;
+    font-size: clamp(30px, 3vw, 42px);
     font-weight: 700;
+    line-height: 1.2;
   }
   p {
-    font-size: 20px;
+    font-size: clamp(16px, 1.5vw, 20px);
     font-weight: 400;
-    padding-bottom: 30px;
+    line-height: 1.5;
   }
   button {
     font-size: 20px;
     font-weight: 700;
     padding: 14px 48px;
+  }
+}
+
+@media (max-width: 760px) {
+  .section1 {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .section1 .image1 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .section1 {
+    margin: 40px 0 56px;
+  }
+
+  .textseciton1 {
+    gap: 16px;
+  }
+
+  .textseciton1 h1 {
+    font-size: 30px;
+  }
+
+  .textseciton1 br {
+    display: none;
+  }
+
+  .textseciton1 button {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
   }
 }

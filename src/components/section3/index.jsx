@@ -1,22 +1,42 @@
-import "./style.css";
-import Meet from "../../assets/image.png";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../context/cartcontext";
+import { getProducts } from "../../API/catalog";
+import { useCart } from "../../context/useCart";
+import ProductCard from "../product/product-card";
+import "./style.css";
 
 function Section3() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { addToCart } = useCart();
-  const product = {
-    id: "beef-Мраморная говядина 1 кг-2000",
-    title: "Мраморная говядина 1 кг",
-    description: "Описание",
-    price: 2000,
-    image: Meet,
-  };
+  const { addToCart, setSelectedProduct } = useCart();
 
-  const handleOrder = () => {
+  useEffect(() => {
+    // Загружаем товары, когда React показывает этот блок.
+    async function loadProducts() {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch {
+        setError("Не удалось загрузить товары. Попробуйте позже.");
+      } finally {
+        // Скрываем сообщение о загрузке даже при ошибке.
+        setLoading(false);
+      }
+    }
+
+    loadProducts();
+  }, []);
+
+  const addProduct = (product) => {
     addToCart(product);
     navigate("/cart");
+  };
+
+  const openProduct = (product) => {
+    setSelectedProduct(product);
+    navigate("/card-page", { state: { product } });
   };
 
   return (
@@ -25,111 +45,22 @@ function Section3() {
         <div className="section3">
           <h1>Товары</h1>
 
-          <div className="product-grid">
-            <div className="product-card">
-              <img src={Meet} alt="Мраморная говядина" />
+          {loading && <p role="status">Загружаем товары...</p>}
+          {error && <p role="alert">{error}</p>}
+          {!loading && !error && products.length === 0 && <p>Товаров пока нет.</p>}
 
-              <h3>Мраморная говядина 1 кг</h3>
-              <p>Описание</p>
-              <strong>2000 ₽</strong>
-
-              <div className="product-buttons">
-                <button onClick={handleOrder}>Заказать</button>
-                <button className="more">Подробнее</button>
-              </div>
+          {!loading && !error && products.length > 0 && (
+            <div className="product-grid">
+              {products.slice(0, 8).map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onAdd={addProduct}
+                  onDetails={openProduct}
+                />
+              ))}
             </div>
-
-            <div className="product-card">
-              <img src={Meet} alt="Мраморная говядина" />
-
-              <h3>Мраморная говядина 1 кг</h3>
-              <p>Описание</p>
-              <strong>2000 ₽</strong>
-
-              <div className="product-buttons">
-                <button onClick={handleOrder}>Заказать</button>
-                <button className="more">Подробнее</button>
-              </div>
-            </div>
-
-            <div className="product-card">
-              <img src={Meet} alt="Мраморная говядина" />
-
-              <h3>Мраморная говядина 1 кг</h3>
-              <p>Описание</p>
-              <strong>2000 ₽</strong>
-
-              <div className="product-buttons">
-                <button onClick={handleOrder}>Заказать</button>
-                <button className="more">Подробнее</button>
-              </div>
-            </div>
-
-            <div className="product-card">
-              <img src={Meet} alt="Мраморная говядина" />
-
-              <h3>Мраморная говядина 1 кг</h3>
-              <p>Описание</p>
-              <strong>2000 ₽</strong>
-
-              <div className="product-buttons">
-                <button onClick={handleOrder}>Заказать</button>
-                <button className="more">Подробнее</button>
-              </div>
-            </div>
-
-            <div className="product-card">
-              <img src={Meet} alt="Мраморная говядина" />
-
-              <h3>Мраморная говядина 1 кг</h3>
-              <p>Описание</p>
-              <strong>2000 ₽</strong>
-
-              <div className="product-buttons">
-                <button onClick={handleOrder}>Заказать</button>
-                <button className="more">Подробнее</button>
-              </div>
-            </div>
-
-            <div className="product-card">
-              <img src={Meet} alt="Мраморная говядина" />
-
-              <h3>Мраморная говядина 1 кг</h3>
-              <p>Описание</p>
-              <strong>2000 ₽</strong>
-
-              <div className="product-buttons">
-                <button onClick={handleOrder}>Заказать</button>
-                <button className="more">Подробнее</button>
-              </div>
-            </div>
-
-            <div className="product-card">
-              <img src={Meet} alt="Мраморная говядина" />
-
-              <h3>Мраморная говядина 1 кг</h3>
-              <p>Описание</p>
-              <strong>2000 ₽</strong>
-
-              <div className="product-buttons">
-                <button onClick={handleOrder}>Заказать</button>
-                <button className="more">Подробнее</button>
-              </div>
-            </div>
-
-            <div className="product-card">
-              <img src={Meet} alt="Мраморная говядина" />
-
-              <h3>Мраморная говядина 1 кг</h3>
-              <p>Описание</p>
-              <strong>2000 ₽</strong>
-
-              <div className="product-buttons">
-                <button onClick={handleOrder}>Заказать</button>
-                <button className="more">Подробнее</button>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

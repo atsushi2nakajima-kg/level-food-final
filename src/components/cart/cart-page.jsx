@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useCart } from "../../context/cartcontext";
+import { useCart } from "../../context/useCart";
 import "./style.css";
 
 function CartPage() {
@@ -22,7 +22,7 @@ function CartPage() {
                 <p>{item.description}</p>
                 <strong className="cart-item-price">{item.price} ₽</strong>
                 <div className="cart-item-actions">
-                  <Link className="cart-order" to="/">Заказать</Link>
+                  <Link className="cart-order" to="/product">Заказать</Link>
                   <div className="cart-item-controls">
                     <button aria-label={`Уменьшить количество ${item.title}`} onClick={() => updateQuantity(item.id, item.quantity - 1)}>−</button>
                     <span>{item.quantity}</span>

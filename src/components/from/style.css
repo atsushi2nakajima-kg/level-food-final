@@ -175,4 +175,46 @@ select {
   width: 230px;
 }
 
+@media (max-width: 800px) {
+  .main {
+    padding: 80px 32px 96px;
+  }
+
+  .zones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 48px 20px 72px;
+  }
+
+  .main h1 {
+    font-size: 30px;
+    margin-bottom: 40px;
+  }
+
+  .forms,
+  .zones {
+    grid-template-columns: 1fr;
+  }
+
+  .order-table {
+    border-radius: 14px;
+  }
+
+  .table-head,
+  .product,
+  .total-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  .confirm button {
+    width: 100%;
+  }
+}
 

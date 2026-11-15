@@ -17,7 +17,7 @@ import Section2 from "./components/section2";
 import Section3 from "./components/section3";
 import Section456 from "./components/section456";
 
-import api from "./API/axios";
+import postsApi from "./API/posts";
 
 import "./App.css";
 import "./Posts.css";
@@ -39,7 +39,7 @@ function PostsPage() {
   useEffect(() => {
     async function getPosts() {
       try {
-        const response = await api.get("/posts", { params: { _limit: 10 } });
+        const response = await postsApi.get("/posts", { params: { _limit: 10 } });
         setPosts(response.data.map((post) => ({ ...post, uiKey: `post-${post.id}` })));
       } catch (err) {
         setLoadError("Не удалось загрузить записи. Проверьте соединение и попробуйте обновить страницу.");
@@ -56,7 +56,7 @@ function PostsPage() {
     setActionError("");
     setNotice("");
     try {
-      const response = await api.get("/posts/1");
+      const response = await postsApi.get("/posts/1");
       setSelectedPost(response.data);
     } catch (err) {
       setActionError("Не удалось получить запись №1.");
@@ -71,7 +71,7 @@ function PostsPage() {
     setNotice("");
 
     try {
-      const response = await api.post("/posts", {
+      const response = await postsApi.post("/posts", {
         title: title.trim(),
         body: body.trim(),
         userId: 1,
@@ -110,7 +110,7 @@ function PostsPage() {
     setActionError("");
     setNotice("");
     try {
-      const response = await api.patch(`/posts/${post.id}`, { title: nextTitle });
+      const response = await postsApi.patch(`/posts/${post.id}`, { title: nextTitle });
       setPosts((currentPosts) => currentPosts.map((item) =>
         item.uiKey === post.uiKey
           ? { ...item, ...response.data, title: response.data.title || nextTitle }
@@ -131,7 +131,7 @@ function PostsPage() {
     setActionError("");
     setNotice("");
     try {
-      await api.delete(`/posts/${post.id}`);
+      await postsApi.delete(`/posts/${post.id}`);
       setPosts((currentPosts) => currentPosts.filter((item) => item.uiKey !== post.uiKey));
       setNotice("Запись удалена из списка. JSONPlaceholder не сохраняет изменения на сервере.");
     } catch (err) {
@@ -236,7 +236,7 @@ function PostsPage() {
 function App() {
   return (
     <CartProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/my-web-level-food">
         <Header />
 
         <Routes>
@@ -251,6 +251,7 @@ function App() {
               <>
                 <Section1 />
                 <Section2 />
+                <Section3 />
                 <Section456 />
               </>
             }
