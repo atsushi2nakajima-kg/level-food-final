@@ -1,293 +1,280 @@
-/* На телефоне сохраняем компьютерную композицию и уменьшаем весь макет целиком. */
+
 @media (max-width: 640px) {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   html,
-  body {
+  body,
+  #root {
     width: 100%;
+    max-width: 100%;
+    margin: 0;
     overflow-x: hidden;
   }
 
-  #root {
-    width: 1440px;
-    max-width: none;
-    margin: 0;
-    zoom: calc(100vw / 1440px);
+  img {
+    max-width: 100%;
+    height: auto;
   }
 
   .header {
-    height: 96px;
-    min-height: 0;
-    flex-wrap: nowrap;
-    padding: 0 80px;
-    gap: 0;
+    width: 100%;
+    height: auto;
+    min-height: 90px;
+    padding: 16px 20px;
+    flex-wrap: wrap;
+    gap: 15px;
   }
 
   .header nav {
-    order: 0;
-    width: auto;
-    flex-wrap: nowrap;
-    gap: 30px;
-    padding: 0;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
   }
 
   .header-right {
-    gap: 30px;
+    gap: 12px;
   }
 
   .section1 {
-    flex-direction: row;
-    align-items: center;
-    margin: 100px 0;
-    gap: 58px;
+    width: 100%;
+    margin: 50px 0;
+    padding: 0 20px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 30px;
   }
 
   .section1 .image1 {
-    width: min(50%, 700px);
+    width: 100%;
   }
 
   .textseciton1 {
-    gap: 24px;
+    width: 100%;
+    gap: 20px;
   }
 
   .textseciton1 h1 {
-    font-size: 42px;
+    font-size: clamp(28px, 8vw, 38px);
+    line-height: 1.2;
+    overflow-wrap: break-word;
   }
 
   .textseciton1 p {
-    font-size: 20px;
+    font-size: 16px;
+    line-height: 1.5;
   }
 
   .textseciton1 br,
   .section45 br,
   .section7 br,
   .adress br {
-    display: initial;
+    display: none;
   }
 
   .textseciton1 button {
-    width: auto;
-    padding: 14px 48px;
-    font-size: 20px;
+    width: 100%;
+    max-width: 280px;
+    padding: 14px 20px;
+    font-size: 16px;
   }
 
-  .section2 {
-    margin-bottom: 100px;
+  .section2,
+  .section4-9,
+  .products,
+  .certificates,
+  .main {
+    width: 100%;
+    padding: 50px 20px;
   }
 
   .adventcards {
-    grid-template-columns: repeat(3, minmax(0, 413px));
-    justify-content: space-between;
+    grid-template-columns: 1fr;
+    gap: 15px;
   }
 
   .adventcard {
-    height: 162px;
-    min-height: 0;
-    padding: 20px 20px 40px 50px;
-    border-radius: 60px 8px 60px 8px;
+    width: 100%;
+    height: auto;
+    min-height: 140px;
+    padding: 25px;
   }
 
-  .section45 {
-    flex-direction: row;
-    align-items: center;
-    gap: 160px;
-  }
-
+  .section45,
   .section45--intro {
-    width: min(calc(100% - 108px), 1064px);
-    margin-left: 108px;
-  }
-
-  .section45 img {
-    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 35px 20px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 25px;
   }
 
   .section45 .image2,
   .section45 .image3 {
-    width: min(100%, 414px);
-    margin-left: 108px;
-    margin-inline: 0;
-  }
-
-  .section45:not(.section45--intro) p {
-    text-align: right;
-  }
-
-  .section7 {
-    height: 518px;
-    min-height: 0;
-    gap: 50px;
-    padding: 75px 43px;
-  }
-
-  .section7 h1 {
-    font-size: 40px;
-  }
-
-  .section7 p {
-    overflow-wrap: normal;
-    font-size: 20px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
   }
 
   .section45 p {
     font-size: 16px;
+    text-align: left;
   }
 
-  .section4-9 > .container > h1,
-  .section4-9 .section8 h1 {
-    margin-bottom: 50px;
-  }
-
-  .section9 {
-    grid-template-columns: repeat(2, minmax(0, 630px));
-  }
-
-  .products {
-    padding: 80px 60px 100px;
-  }
-
-  .products-top h1 {
-    font-size: 32px;
-  }
-
-  .product-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    max-width: none;
-  }
-
-  .categories {
-    justify-content: center;
+  .section7 {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 50px 20px;
+    flex-direction: column;
     gap: 25px;
-    margin-bottom: 65px;
   }
 
-  .certificates {
-    padding: 160px 80px 100px;
-  }
-
-  .certificates h1 {
-    margin-bottom: 50px;
-    font-size: 48px;
-  }
-
-  .cert-slider {
-    gap: 30px;
-  }
-
-  .cert-card {
-    flex-basis: 595px;
-    max-width: 595px;
-  }
-
-  .cert-card h3 {
-    font-size: 20px;
-  }
-
-  .cart-page {
-    min-height: 1021px;
-    padding: 140px 80px;
-  }
-
-  .cart-layout {
-    grid-template-columns: minmax(0, 630px) minmax(270px, 300px);
-    gap: 128px;
-  }
-
-  .cart-items {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .cart-item-actions {
-    align-items: center;
-    flex-direction: row;
-  }
-
-  .cart-summary {
-    width: auto;
-    max-width: none;
-  }
-
-  .cart-checkout {
-    margin-top: 60px;
-  }
-
-  .card-page {
-    padding: 144px 79px 140px;
-  }
-
-  .card-page-main {
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
-    gap: 122px;
-  }
-
-  .big-info h1 {
-    margin-bottom: 38px;
-    font-size: 50px;
-  }
-
-  .big-info p {
-    margin-bottom: 38px;
-    font-size: 20px;
-  }
-
-  .detail-actions {
-    gap: 28px;
-    margin-top: 150px;
-  }
-
-  .detail-actions > button {
-    min-width: 184px;
-  }
-
-  .detail-quantity {
-    width: 230px;
-  }
-
-  .recommendation-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .recommendations {
-    margin-top: 140px;
-  }
-
-  .recommendations > h2 {
-    margin-bottom: 70px;
+  .section7 h1 {
     font-size: 30px;
   }
 
+  .section7 p {
+    font-size: 16px;
+  }
+
+  .section9 {
+    grid-template-columns: 1fr;
+  }
+
+  .product-grid,
+  .recommendation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  .categories {
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 35px;
+  }
+
+  .products {
+    padding: 50px 15px;
+  }
+
+  .certificates {
+    padding: 60px 20px;
+  }
+
+  .certificates h1 {
+    font-size: 32px;
+  }
+
+  .cert-slider {
+    gap: 15px;
+    overflow-x: auto;
+  }
+
+  .cert-card {
+    flex: 0 0 85%;
+    max-width: 85%;
+  }
+
+  .cart-page {
+    width: 100%;
+    min-height: 0;
+    padding: 50px 20px;
+  }
+
+  .cart-layout,
+  .card-page-main {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .cart-items {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-summary {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .cart-checkout {
+    margin-top: 30px;
+  }
+
+  .card-page {
+    padding: 50px 20px;
+  }
+
+  .big-info h1 {
+    font-size: 32px;
+  }
+
+  .big-info p {
+    font-size: 16px;
+  }
+
+  .detail-actions {
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 40px;
+  }
+
+  .detail-actions > button {
+    min-width: 0;
+  }
+
+  .detail-quantity {
+    width: 100%;
+    max-width: 230px;
+  }
+
+  .recommendations {
+    margin-top: 60px;
+  }
+
+  .recommendations > h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+  }
+
   .main {
-    padding: 110px 60px 120px;
+    padding: 50px 20px;
   }
 
   .main h1 {
-    font-size: 40px;
-    margin-bottom: 65px;
+    font-size: 30px;
+    margin-bottom: 35px;
   }
 
-  .forms {
-    grid-template-columns: 1fr 1fr;
-  }
-
+  .forms,
   .zones {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .table-head,
   .product,
   .total-row {
-    grid-template-columns: 80% 20%;
-    gap: 0;
-    padding: 14px;
-    overflow-wrap: normal;
+    grid-template-columns: 70% 30%;
+    gap: 5px;
+    padding: 10px;
+    font-size: 13px;
+    overflow-wrap: anywhere;
   }
 
   .confirm button {
-    width: 230px;
+    width: 100%;
+    max-width: 230px;
   }
 
   .footer {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-    padding: 45px 80px;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 40px 20px;
   }
 
   .footer-logo {
@@ -297,10 +284,6 @@
 
   .footer-links,
   .contacts {
-    text-align: initial;
-  }
-
-  .contacts {
-    text-align: right;
+    text-align: left;
   }
 }
